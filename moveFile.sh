@@ -5,7 +5,8 @@
 
 # Define some variables for use in the functions.
 
-VIDEO_EXTENSION=*.mov
+# VIDEO_EXTENSION=*.mov
+VIDEO_EXTENSION_ARRAY=( "*.mov" "*.mp4" )
 IMAGE_EXTENSION=*.jpg
 
 SOURCE_PATH=/c/temp
@@ -17,7 +18,10 @@ function moveFiles () {
 }
 
 function moveVideos () {
-    mv -i $SOURCE_PATH/$VIDEO_EXTENSION -t $DESTINATION_PATH
+    for extension in "${VIDEO_EXTENSION_ARRAY[@]}"
+    do
+        mv -i $SOURCE_PATH/$extension -t $DESTINATION_PATH
+    done
 }
 
 function moveBoth () {
@@ -28,9 +32,9 @@ function moveBoth () {
 # This is the main processing loop and will continue until CNTL + C is pressed
 while true; do 
     clear
-    echo "1 Move Files."
-    echo "2 Move Video."
-    echo "3 Move Both."
+    echo "1. Move Files"
+    echo "2. Move Video"
+    echo "3. Move Both"
     echo "CNTL + C to Quit"
     read response
     if [ $response = 1 ]; then
@@ -41,6 +45,6 @@ while true; do
         moveBoth
     else
         echo "incorrect choice dingus"
-        sleep 2
+        sleep 1
     fi
 done
